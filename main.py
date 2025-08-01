@@ -4,6 +4,7 @@ from player import Player
 from circleshape import *
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+import sys
 
 def main():
     pygame.init()
@@ -24,9 +25,9 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroid_field = AsteroidField()
 
-    print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
+    #print("Starting Asteroids!")
+    #print(f"Screen width: {SCREEN_WIDTH}")
+    #print(f"Screen height: {SCREEN_HEIGHT}")
 
     while True:
         for event in pygame.event.get():
@@ -35,10 +36,17 @@ def main():
 
         updatable.update(dt)
 
+
         screen.fill((0, 0, 0))
         
         for obj in drawable:
             obj.draw(screen)
+
+        for ast in asteroids:
+            #print(f"ast position:{ast.position} player position:{player.position}")
+            if ast.collision_check(player) == True:
+                print("Game Over!")
+                sys.exit()
 
         pygame.display.flip()
     
